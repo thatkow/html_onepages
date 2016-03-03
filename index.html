@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Targets Extractor</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+
+  <style>
+  #holder { border: 10px dashed #ccc; width: 300px; height: 300px; margin: 20px auto;}
+  #holder.hover { border: 10px dashed #333; }
+  </style>
+  <article>
+    <div id="holder"></div>
+    <p id="status"></p>
+  </article>
+  <script>
+  var holder = document.getElementById('holder'),
+  state = document.getElementById('status');
+
+  if (typeof window.FileReader === 'undefined') {
+    state.className = 'fail';
+  } else {
+    state.className = 'success';
+    state.innerHTML = '';
+  }
+
+  holder.ondragover = function () { this.className = 'hover'; return false; };
+  holder.ondragend = function () { this.className = ''; return false; };
+  holder.ondrop = function (e) {
+    this.className = '';
+    e.preventDefault();
+
+    var file = e.dataTransfer.files[0],
+    reader = new FileReader();
+    reader.onload = function (event) {
+      console.log(event.target);
+      holder.style.background = 'url(' + event.target.result + ') no-repeat center';
+    };
+    console.log(file);
+    reader.readAsDataURL(file);
+
+    return false;
+  };
+  </script>
+
+  <?php
+  echo "My first PHP script!";
+  ?>
+
+</body>
+</html>
